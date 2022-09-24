@@ -27,21 +27,21 @@
 
 登录界面：
 
-![](https://raw.githubusercontent.com/Revincx/MyWrtBuilder/main/img/login.png)
+![Login Page](https://raw.githubusercontent.com/Revincx/MyWrtBuilder/main/img/login.png)
 
 内置组件：
 
-![](https://raw.githubusercontent.com/Revincx/MyWrtBuilder/main/img/apps.png)
+![Internal Apps](https://raw.githubusercontent.com/Revincx/MyWrtBuilder/main/img/apps.png)
 
 主界面：
 
-![](https://raw.githubusercontent.com/Revincx/MyWrtBuilder/main/img/main_status.png)
+![Main Page](https://raw.githubusercontent.com/Revincx/MyWrtBuilder/main/img/main_status.png)
 
 ### 食用方法
 
 如果你对上图中我内置的组件感到满意，可以直接在 Release 页面下载编译完成的固件刷入使用。
 
-如果你想添加或删除其他内置组件，只需 Fork 本仓库，修改 build.sh 然后进入 Actions 编译即可。
+如果你想添加或删除其他内置组件，只需 Fork 本仓库，修改 build.sh 然后进入 Actions 编译即可。如果想添加自定义的 ipk 包，则需要把 ipk 包的下载链接添加到 external-package-urls.txt 中，同时也需要在 build.sh 中添加对应的包名。
 
 ### 计划中的想法
 
