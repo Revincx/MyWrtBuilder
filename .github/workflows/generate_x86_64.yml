@@ -1,0 +1,75 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Generate x86_64 OpenWrt Firmware
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  DOWNLOAD_BASE: https://downloads.immortalwrt.org/
+  VENDOR: immortalwrt
+  VERSION: 21.02.1
+  UPLOAD_RELEASE: false
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  Generate:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    outputs:
+      DATE: ${{ steps.date.outputs.DATE }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Initialization Environment
+        run: |
+          sudo apt-get -qq update
+          sudo apt install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download Image Builder
+        run: |
+          wget $DOWNLOAD_BASE/releases/$VERSION/targets/x86/64/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64.tar.xz
+          tar -xvf $VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64.tar.xz
+          cp -r $VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64/* .
+          rm -rf $VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64*
+      
+      - name: Download External Packages
+        run: |
+          cat external-package-urls.txt | xargs wget -P packages
+      
+      - name: Run Patch Scripts
+        run: |
+          bash scripts/patch.sh
+
+      - name: Generate Firmware
+        run: |
+          bash build.sh
+
+      - name: Get Now Date
+        id: date
+        run: |
+          echo "::set-output name=DATE::$(date +'%Y-%m-%d')"
+
+      - name: Upload Firmware to Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.VENDOR }}-x86-64-images-${{ steps.date.outputs.DATE }}
+          path: bin/targets/x86/64/*
+
+      - name: Upload Firmware to Release
+        if: ${{ env.UPLOAD_RELEASE == 'true' }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: bin/targets/x86/64/*
+          asset_name: ${{ github.event.repository.name }}-${{ github.sha }}
+          tag: release-${{ steps.date.outputs.DATE }}
+          overwrite: true
