@@ -47,6 +47,15 @@ jobs:
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
         run: |
           cat external-package-urls.txt | xargs wget -P packages
+
+      - name: Download Clash Kernel
+        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
+        run: |
+          mkdir -p files/etc/openclash/core
+          cd files/etc/openclash/core
+          wget https://raw.githubusercontent.com/vernesong/OpenClash/master/core-lateset/dev/clash-linux-amd64.tar.gz
+          tar -zxvf clash-linux-amd64.tar.gz
+          rm -rf clash-linux-amd64.tar.gz
       
       - name: Run Patch Scripts
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
