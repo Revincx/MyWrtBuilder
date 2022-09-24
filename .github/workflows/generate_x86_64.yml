@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOWNLOAD_BASE: https://downloads.immortalwrt.org/
+  DOWNLOAD_BASE: https://downloads.immortalwrt.org
   VENDOR: immortalwrt
   VERSION: 21.02.1
   UPLOAD_RELEASE: false
@@ -56,12 +56,12 @@ jobs:
       - name: Get Now Date
         id: date
         run: |
-          echo "::set-output name=DATE::$(date +'%Y-%m-%d')"
+          echo "::set-output name=DATE::$(date +'%Y%m%d%H%M%S')"
 
       - name: Upload Firmware to Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VENDOR }}-x86-64-images-${{ steps.date.outputs.DATE }}
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86-64-images-${{ steps.date.outputs.DATE }}
           path: bin/targets/x86/64/*
 
       - name: Upload Firmware to Release
