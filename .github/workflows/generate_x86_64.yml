@@ -18,7 +18,7 @@ jobs:
   # This workflow contains a single job called "build"
   Generate:
     # The type of runner that the job will run on
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     outputs:
       DATE: ${{ steps.date.outputs.DATE }}
@@ -48,6 +48,9 @@ jobs:
       - name: Run Patch Scripts
         run: |
           bash scripts/patch.sh
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Generate Firmware
         run: |
