@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     outputs:
+      DATETIME: ${{ steps.date.outputs.DATETIME }}
       DATE: ${{ steps.date.outputs.DATE }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -67,15 +68,16 @@ jobs:
         run: |
           bash build.sh
 
-      - name: Get Now Date
+      - name: Get Current Date
         id: date
         run: |
-          echo "::set-output name=DATE::$(date +'%Y%m%d%H%M%S')"
+          echo "::set-output name=DATE::$(date +'%Y%m%d')"
+          echo "::set-output name=DATETIME::$(date +'%Y%m%d%H%M%S')"
 
       - name: Upload Firmware to Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86-64-images-${{ steps.date.outputs.DATE }}
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ steps.date.outputs.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*
 
       - name: Upload Firmware to Release
