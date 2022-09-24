@@ -44,17 +44,17 @@ jobs:
           cp -r $GITHUB_WORKSPACE/Repo/* $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64/
       
       - name: Download External Packages
-        working-directory: $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64
+        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
         run: |
           cat external-package-urls.txt | xargs wget -P packages
       
       - name: Run Patch Scripts
-        working-directory: $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64
+        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
         run: |
           bash scripts/patch.sh
 
       - name: Generate Firmware
-        working-directory: $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64
+        working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
         run: |
           bash build.sh
 
