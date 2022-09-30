@@ -50,7 +50,11 @@ PACKAGES="$PACKAGES luci-i18n-vsftpd-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-dockerman-zh-cn luci-i18n-docker-zh-cn"
 
 # VPN 类
-PACKAGES="$PACKAGES luci-i18n-ipsec-vpnd-zh-cn luci-i18n-zerotier-zh-cn luci-i18n-wireguard-zh-cn"
+
+# IPSec VPN
+PACKAGES="$PACKAGES luci-i18n-ipsec-vpnd-zh-cn"
+# Zerotier
+PACKAGES="$PACKAGES luci-i18n-zerotier-zh-cn"
 
 # 网络组件
 
@@ -58,12 +62,11 @@ PACKAGES="$PACKAGES luci-i18n-ipsec-vpnd-zh-cn luci-i18n-zerotier-zh-cn luci-i18
 PACKAGES="$PACKAGES luci-i18n-eqos-zh-cn"
 # 多线多拨与负载均衡
 PACKAGES="$PACKAGES luci-app-syncdial luci-i18n-mwan3-zh-cn"
-
 # 宽带监控 Nlbwmon
 PACKAGES="$PACKAGES luci-i18n-nlbwmon-zh-cn"
 
 # 界面翻译补全
-PACKAGES="$PACKAGES luci-i18n-opkg-zh-cn luci-i18n-base-zh-cn luci-i18n-turboacc-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-opkg-zh-cn luci-i18n-base-zh-cn luci-i18n-firewall-zh-cn luci-i18n-turboacc-zh-cn"
 
 # Packages 文件夹下的 ipk 包
 PACKAGES="$PACKAGES luci-i18n-wrtbwmon-zh-cn"
@@ -72,7 +75,15 @@ PACKAGES="$PACKAGES luci-i18n-wrtbwmon-zh-cn"
 PACKAGES="$PACKAGES kmod-usb-printer kmod-lp"
 
 # 一些其他可能有用的包
-PACKAGES="$PACKAGES vim lrzsz zsh netdata openssh-server openssh-client"
+
+# Vim 完整版，带语法高亮
+PACKAGES="$PACKAGES vim-fuller"
+# X/Y/ZMODEM 文件传输
+PACKAGES="$PACKAGES lrzsz"
+# OpenSSH
+PACKAGES="$PACKAGES openssh-server openssh-client"
+# Netdata 系统监控界面
+PACKAGES="$PACKAGES netdata"
 
 # 一些自定义文件
 FILES="files"
