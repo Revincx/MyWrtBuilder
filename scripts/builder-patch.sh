@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Start Builder Patch !"
+echo "Current Path: $PWD"
+
 cd $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64 || exit
 
 # Remove redundant default packages
