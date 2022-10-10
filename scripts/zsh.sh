@@ -10,8 +10,8 @@ ZSH=$ROOT/.oh-my-zsh
 ZSH_CUSTOM=$ZSH/custom
 
 git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git $ZSH
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/zsh-autosuggestions
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/zsh-syntax-highlighting
+git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 
 cp $ZSH/templates/zshrc.zsh-template $ROOT/.zshrc
 
