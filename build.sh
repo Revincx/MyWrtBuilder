@@ -78,6 +78,8 @@ PACKAGES="$PACKAGES kmod-usb-printer kmod-lp"
 
 # 一些其他可能有用的包
 
+# zsh 终端
+PACKAGES="$PACKAGES zsh"
 # Vim 完整版，带语法高亮
 PACKAGES="$PACKAGES vim-fuller"
 # X/Y/ZMODEM 文件传输
