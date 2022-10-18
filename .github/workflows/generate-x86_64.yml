@@ -6,13 +6,16 @@ name: Generate x86_64 OpenWrt Firmware
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  push:
+    inputs:
+      release: 
+        description: 将编译出的镜像上传到 Release
+        required: false
+        default: 'false'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
   VENDOR: immortalwrt
   VERSION: 21.02.1
-  UPLOAD_RELEASE: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -75,7 +78,7 @@ jobs:
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*
 
       - name: Upload Firmware to Release
-        if: ${{ env.UPLOAD_RELEASE == 'true' }}
+        if: github.event.inputs.release == 'true'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
