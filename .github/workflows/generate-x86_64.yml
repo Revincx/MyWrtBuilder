@@ -24,10 +24,6 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-20.04
 
-    outputs:
-      DATETIME: ${{ steps.date.outputs.DATETIME }}
-      DATE: ${{ steps.date.outputs.DATE }}
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Initialization Environment
@@ -35,18 +31,23 @@ jobs:
           sudo apt-get -qq update
           sudo apt-get -qq install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip python qemu-utils mkisofs
 
+      - name: Setup Environment Variables
+        run: |
+          echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+          echo "DATETIME=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+      
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v3
         with: 
-          path: Repo
+          path: origin
 
       - name: Download Image Builder
         run: |
           wget $DOWNLOAD_BASE/releases/$VERSION/targets/x86/64/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64.tar.xz
           tar -xvf $VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64.tar.xz
           rm -rf $VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64.tar.xz
-          cp -r $GITHUB_WORKSPACE/Repo/* $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64/
+          cp -r $GITHUB_WORKSPACE/origin/* $GITHUB_WORKSPACE/$VENDOR-imagebuilder-$VERSION-x86-64.Linux-x86_64/
       
       - name: Download External Packages
         working-directory: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64
@@ -65,16 +66,10 @@ jobs:
         run: |
           bash build.sh
 
-      - name: Get Current Date
-        id: date
-        run: |
-          echo "::set-output name=DATE::$(date +'%Y%m%d')"
-          echo "::set-output name=DATETIME::$(date +'%Y%m%d%H%M%S')"
-
       - name: Upload Firmware to Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ steps.date.outputs.DATETIME }}
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*
 
       - name: Upload Firmware to Release
@@ -85,5 +80,5 @@ jobs:
           file_glob: true
           file: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*
           asset_name: ${{ github.event.repository.name }}-${{ github.sha }}
-          tag: release-${{ steps.date.outputs.DATE }}
+          tag: release-${{ env.DATE }}
           overwrite: true
