@@ -1,0 +1,27 @@
+name: Issue Trigger Test
+
+on:
+  issues:
+    types: 
+      - labeled
+
+jobs: 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: |
+          echo "Hello World!"
+          echo "This is a test for issue trigger."
+          echo "The github object: ${{ github }}."
+          echo "The github event object: ${{ github.event }}."
+          echo "The github issue object: ${{ github.event.issue }}."
+          echo "The github issue number: ${{ github.event.issue.number }}."
+          echo "The github issue title: ${{ github.event.issue.title }}."
+          echo "The github issue body: ${{ github.event.issue.body }}."
+          echo "The github issue labels: ${{ github.event.issue.labels }}."
+          echo "The github issue id: ${{ github.event.issue.id }}."
+          echo "The github issue body: ${{ github.event.issue.body }}."
+          echo "The github issue bodyUrl: ${{ github.event.issue.bodyUrl }}."
+          echo "The github issue bodyText: ${{ github.event.issue.bodyText }}."
+          echo "The github issue bodyHTML: ${{ github.event.issue.bodyHTML }}."
