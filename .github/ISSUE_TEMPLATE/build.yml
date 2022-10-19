@@ -1,0 +1,12 @@
+name: Build Trigger
+
+description: Trigger a build when an issue is labeled
+
+labels: [trigger]
+
+body: 
+  - type: dropdown
+    attributes:
+      label: Target Architecture
+      description: The target architecture for the build
+      options: [x86-64, rockchip-armv8]
