@@ -15,7 +15,7 @@ on:
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
   VENDOR: immortalwrt
-  VERSION: 21.02.2
+  VERSION: 21.02.3
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
