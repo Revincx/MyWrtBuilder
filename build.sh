@@ -68,7 +68,7 @@ PACKAGES="$PACKAGES luci-app-syncdial luci-i18n-mwan3-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-nlbwmon-zh-cn"
 
 # 界面翻译补全
-PACKAGES="$PACKAGES luci-i18n-opkg-zh-cn luci-i18n-base-zh-cn luci-i18n-firewall-zh-cn luci-i18n-turboacc-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-opkg-zh-cn luci-i18n-base-zh-cn luci-i18n-firewall-zh-cn"
 
 # Packages 文件夹下的 ipk 包
 PACKAGES="$PACKAGES luci-i18n-wrtbwmon-zh-cn"

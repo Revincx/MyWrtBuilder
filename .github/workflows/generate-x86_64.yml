@@ -11,18 +11,22 @@ on:
         description: 将编译出的镜像上传到 Release
         required: false
         default: 'false'
+      upload-all:
+        description: 将编译出的所有镜像都上传到 Artifacts
+        required: false
+        default: 'true'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
   VENDOR: immortalwrt
-  VERSION: 21.02.7
+  VERSION: 23.05.1
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   Generate:
     # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -66,7 +70,15 @@ jobs:
         run: |
           bash build.sh
 
-      - name: Upload Firmware to Artifacts
+      - name: Upload VDI Image For Development Purpose
+        if: github.ref == 'refs/heads/dev'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-vdi-image-${{ env.DATETIME }}
+          path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*.vdi
+
+      - name: Upload All Firmware to Artifacts
+        if: github.event.inputs.upload-all == 'true'
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
