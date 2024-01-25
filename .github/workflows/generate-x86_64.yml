@@ -11,6 +11,10 @@ on:
         description: 将编译出的镜像上传到 Release
         required: false
         default: 'false'
+      upload-all:
+        description: 将编译出的所有镜像都上传到 Artifacts
+        required: false
+        default: 'true'
 
 env:
   DOWNLOAD_BASE: https://downloads.immortalwrt.org
@@ -74,6 +78,7 @@ jobs:
           path: ${{ env.VENDOR }}-imagebuilder-${{ env.VERSION }}-x86-64.Linux-x86_64/bin/targets/x86/64/*.vdi
 
       - name: Upload All Firmware to Artifacts
+        if: github.event.inputs.upload-all == 'true'
         uses: nmerget/upload-gzip-artifact@v1.0.0
         with:
           name: ${{ env.VENDOR }}-${{ env.VERSION }}-x86_64-images-${{ env.DATETIME }}
